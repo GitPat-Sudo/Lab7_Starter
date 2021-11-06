@@ -38,9 +38,12 @@ self.addEventListener('activate', function (event) {
    * TODO - Part 2 Step 3
    * Create a function as outlined above, it should be one line
    */
-   event.waitUntil(()=>{
-    return caches.delete(CACHE_NAME);   
-        })
+    event.waitUntil(
+     caches.then(()=>{
+      return caches.delete(CACHE_NAME); 
+      
+      })
+   )
 });
 
 // Intercept fetch requests and store them in the cache
