@@ -11,7 +11,7 @@
   *     easily modify the URL without refreshing the page or anything
   */
 
-export class Router {
+ export class Router {
   static routes = {};
 
   /**
@@ -38,6 +38,7 @@ export class Router {
      * router instance using the 'this' keyword. Substitute 'home' for the variable
      * page
      */
+    this[page] = pageFunc;
   }
 
   /**
@@ -65,5 +66,14 @@ export class Router {
      *     and URL + hash to history
      *  4. Finally, call the stored function for the given page
      */
+    if (!this[page]) {
+       console.log("Bad.");
+       return;
+    }
+    let hash = (page == 'home') ? ' ' : '#' + page;
+    if (!statePopped && window.location.hash != hash) {
+       history.pushState(history.state, '', hash);
+    }
+    this[page].call();
   }
 }
